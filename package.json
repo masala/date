@@ -41,6 +41,7 @@
   },
   "scripts": {
     "test": "jest",
+    "testone":"jest --testNamePattern=^combineTest$",
     "specific": "ts-node ./examples/markdown/test/markdown-tests.ts"
   },
   "devDependencies": {
