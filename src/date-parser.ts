@@ -21,9 +21,7 @@ export function thenify(parsers: IParser<any>[]):TupleParser<any>{
 
 const monthToken = genlex.tokenize(month(), "month", 1000);
 const yearToken = genlex.tokenize(year(), "year", 1000);
-
-
-// const separatorToken = genlex.tokenize(C.charNotIn("mY"), "sep", 10000); // a letter would be the separator.
+const separatorToken = genlex.tokenize(C.charNotIn("mY"), "sep", 10000); // a letter would be the separator.
 // 2nd step: the parser should be map to a parser that accept the same char
 
 const grammar = F.any().rep().map((tuple:Tuple<TokenResult<Parser<any>>>) => thenify(tuple.array().map(t=>t.value)))
