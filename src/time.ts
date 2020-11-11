@@ -27,7 +27,7 @@ export function secondsParser() {
 }
 
 export function milliSecondsParser() {
-    return N.digit().occurrence(2).map(t => t.join('')).map(s => parseInt(s)).map(millis => ({millis}));
+    return N.digit().occurrence(3).map(t => t.join('')).map(s => parseInt(s)).map(millis => ({millis}));
 }
 
 const sign = () => tryAll([C.char('+'), C.char('-')]);
@@ -35,22 +35,19 @@ const twelveMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<=12)
 const twentyFourMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<=24)
 const sixtyMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<60)
 
-export function timeZoneXIsoParser() {
+export function timeZoneZParser() {
     //-08; -0800; -08:00
 
-    const first = sign().then(twelveMax()).map(v => ({timezone: v.join(''), tz:'X'}))
-    const second = sign().then(twelveMax()).then(sixtyMax()).map(v => ({timezone: v.join(''), tz:'X'}))
+    const first = sign().then(twelveMax()).map(v => ({timezone: v.join(''), tz:'Z'}))
+    const second = sign().then(twelveMax()).then(sixtyMax()).map(v => ({timezone: v.join(''), tz:'Z'}))
     const third = sign()
         .then(twelveMax())
         .then(C.char(":"))
         .then(sixtyMax())
-        .map(v => ({timezone: v.join(''), tz:'X'}));
+        .map(v => ({timezone: v.join(''), tz:'Z'}));
     return tryAll([third, second, first]);
 }
 
-export function timeZoneZRfcParser() {
-    return sign().then(N.digit().occurrence(4)).map(v => ({timezone: v.join(''), tz:'Z'}))
-}
 
 
 
@@ -82,14 +79,13 @@ export function milliSeconds() {
     return C.string('SSS').map(() => milliSecondsParser());
 }
 
-export function timeZoneXIso(){
-    return C.char('X').map(()=>timeZoneXIsoParser());
+export function timeZone(){
+    return C.char('Z').map(()=>timeZoneZParser());
 }
 
-export function timeZoneZRfc(){
-    return C.char('Z').map(()=>timeZoneZRfcParser());
+export function timeSeparator(){
+    return C.char('T').map(()=>C.char('T').drop())
 }
-
 
 function tryAll(array: IParser<any>[]) {
     if (array.length === 0) {

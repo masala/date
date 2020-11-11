@@ -4,13 +4,13 @@ import {year, yearParser} from "../src/year";
 
 
     test('parsing months', () => {
-        const monthParser = month().val("mm");
+        const monthParser = month().val("MM");
         const val = monthParser.val("12");
         expect(val).toEqual({month:12});
     });
 
     test('parsing bad months', () => {
-        const monthParser = month().val("mm");
+        const monthParser = month().val("MM");
         const val = monthParser.val("13");
         expect(val).toEqual(undefined);
     });

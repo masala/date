@@ -12,6 +12,6 @@ export function separatorParser(char: string) {
 
 export function separator() {
 
-    return C.charNotIn("mYhHSsXZ+-").map((c) => separatorParser(c));
+    return C.charNotIn("mMYyhHSsXZT").map((c) => separatorParser(c));
 
 }

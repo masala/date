@@ -2,6 +2,9 @@
 
 Date parser using masala parser.
 
+## Usage
+
+
 
 ## Goals
 
@@ -22,6 +25,33 @@ These tokens are supported with some limitations. The most important limitation 
 It should be enough for most enterprise date parser though. Moreover you can add tokens,
  change the limitations, give new powers.
 
+Example: `YYYY-MM-ddThh:mm:ss::SSS a Z` parses `2020-08-27T08:55:04::012 a.m. -06` and gives this
+ result:
+
+```json5
+{
+        year: 2020,
+        month: 8,
+        day: 27,
+        amPmHours: 8,
+        minutes: 55,
+        seconds: 4,
+        millis: 12,
+        amPmMarker: 'AM',
+        timezone: '-06',
+        tz: 'Z'
+}
+```
  
-
-
+* Year: `YYYY` only ; result {year}
+* Month: `MM` only ; result {month}
+* Days: `dd` only ; result {day}
+* Time separator `T`; result is dropped
+* 12h : `hh` ; result {amPmHours}
+* 24h: `HH` ; result {twentyFourHours}
+* minutes: `mm` only ; result {minutes}
+* seconds: `ss` only ; result {seconds}
+* millis: `SSS` only ; result {millis}
+* AM-PM: `a` as `AM`, `am`, or `a.m.`; result {amPmMarker}
+* TimeZone :`Z` only but interpreted for `-08`, `-0800`, `+09:30`; result {timezone}
+    - `{tz:'Z'}` is added to the result, as other timezone such as `z` or `X` could come.

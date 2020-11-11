@@ -11,10 +11,20 @@ import {
     TokenResult,
     SingleParser
 } from '@masala/parser'
-import {month, monthParser} from "./month";
-import {year, yearParser} from "./year";
+import {month} from "./month";
+import {year} from "./year";
 import {separator} from './separator'
-import {amPmHours, amPmMarker, milliSeconds, minutes, seconds, twentyFourHours} from './time'
+import {
+    amPmHours,
+    amPmMarker,
+    milliSeconds,
+    minutes,
+    seconds,
+    twentyFourHours,
+    timeZone,
+    timeSeparator
+} from './time'
+import {day} from './day'
 
 
 /**
@@ -43,19 +53,21 @@ export function thenify(parsers: IParser<any>[]):SingleParser<DateResult>{
 
 }
 
-const monthToken = genlex.tokenize(month(), "month", 1000);
 const yearToken = genlex.tokenize(year(), "year", 1000);
+const monthToken = genlex.tokenize(month(), "month", 1000);
+const dayToken = genlex.tokenize(day(), "day", 1000);
+const timeSeparatorToken = genlex.tokenize(timeSeparator(), "timeSeparator", 1000);
 const amPmHoursToken = genlex.tokenize(amPmHours(), "amPmHours", 1000);
 const amPmMarkerToken = genlex.tokenize(amPmMarker(), "amPmMarker", 1000);
 const twentyFourHoursToken = genlex.tokenize(twentyFourHours(), "twentyFourHours", 1000);
 const minutesToken = genlex.tokenize(minutes(), "minutes", 1000);
 const secondsToken = genlex.tokenize(seconds(), "seconds", 1000);
 const milliSecondsToken = genlex.tokenize(milliSeconds(), "milliSeconds", 1000);
+const timeZoneToken = genlex.tokenize(timeZone(), "timeZone", 1000);
 const separatorToken = genlex.tokenize(separator(), "sep", 10000); // a letter would
-// remove any possibility a separator is found
+// remove any possibility another separator is found
 genlex.setSeparatorsParser(F.any().filter(c => c === Symbol()))
-// be the
-// separator.
+
 // 2nd step: the parser should be map to a parser that accept the same char
 
 const grammar = F.any().rep()

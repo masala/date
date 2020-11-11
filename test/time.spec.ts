@@ -1,16 +1,16 @@
-import {amPmMarkerParser, timeZoneXIsoParser} from '../src/time'
+import {amPmMarkerParser, timeZoneZParser} from '../src/time'
 import {dateParser} from '../src/date-parser'
 import {Streams} from '@masala/parser';
 
 test('timeZoneXIsoParser', () => {
-    let val = timeZoneXIsoParser().eos().val("+0800");
-    expect(val).toEqual({timezone: "+0800", tz: 'X'});
+    let val = timeZoneZParser().eos().val("+0800");
+    expect(val).toEqual({timezone: "+0800", tz: 'Z'});
 
-    val = timeZoneXIsoParser().eos().val("+08");
-    expect(val).toEqual({timezone: "+08", tz: 'X'});
+    val = timeZoneZParser().eos().val("+08");
+    expect(val).toEqual({timezone: "+08", tz: 'Z'});
 
-    val = timeZoneXIsoParser().eos().val("-08:30");
-    expect(val).toEqual({timezone: "-08:30", tz: 'X'});
+    val = timeZoneZParser().eos().val("-08:30");
+    expect(val).toEqual({timezone: "-08:30", tz: 'Z'});
 });
 
 test('amPmMarkerParser', () => {
@@ -19,14 +19,14 @@ test('amPmMarkerParser', () => {
 });
 
 
-test('timeZoneXIsoParser with bad values', () => {
-    let val = timeZoneXIsoParser().eos().val("+1300");
+test('timeZoneZParser with bad values', () => {
+    let val = timeZoneZParser().eos().val("+1300");
     expect(val).toBe(undefined);
 
-    val = timeZoneXIsoParser().eos().val("+13");
+    val = timeZoneZParser().eos().val("+13");
     expect(val).toBe(undefined);
 
-    val = timeZoneXIsoParser().eos().val("-08:70");
+    val = timeZoneZParser().eos().val("-08:70");
     expect(val).toBe(undefined);
 });
 

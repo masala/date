@@ -13,7 +13,7 @@ export function monthParser(n:number){
 
 export function month(){
 
-    return C.char('m').occurrence(2).map( ()=> monthParser(2));
+    return C.char('M').occurrence(2).map( ()=> monthParser(2));
 
 }
 
