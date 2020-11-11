@@ -18,6 +18,7 @@ import {separator} from './separator'
 
 /**
  * Created by Nicolas Zozol on 2020/11/05
+ * Following simplification of: https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
  */
 
 
