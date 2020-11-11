@@ -10,3 +10,15 @@ test('timeZoneXIsoParser', () => {
     val = timeZoneXIsoParser().eos().val("-08:30");
     expect(val).toEqual({timezone: "-08:30", tz:'X'});
 });
+
+
+test('timeZoneXIsoParser with bad values', () => {
+    let val = timeZoneXIsoParser().eos().val("+1300");
+    expect(val).toBe(undefined);
+
+    val = timeZoneXIsoParser().eos().val("+13");
+    expect(val).toBe(undefined);
+
+    val = timeZoneXIsoParser().eos().val("-08:70");
+    expect(val).toBe(undefined);
+});

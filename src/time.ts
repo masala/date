@@ -21,17 +21,18 @@ export function milliSecondsParser() {
 }
 
 const sign = () => tryAll([C.char('+'), C.char('-')]);
-const twelveMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))>12)
+const twelveMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<=12)
+const sixtyMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<60)
 
 export function timeZoneXIsoParser() {
     //-08; -0800; -08:00
 
-    const first = sign().then(N.digit().occurrence(2)).map(v => ({timezone: v.join(''), tz:'X'}))
-    const second = sign().then(N.digit().occurrence(4)).map(v => ({timezone: v.join(''), tz:'X'}))
+    const first = sign().then(twelveMax()).map(v => ({timezone: v.join(''), tz:'X'}))
+    const second = sign().then(twelveMax()).then(sixtyMax()).map(v => ({timezone: v.join(''), tz:'X'}))
     const third = sign()
-        .then(N.digit().occurrence(2))
+        .then(twelveMax())
         .then(C.char(":"))
-        .then(N.digit().occurrence(2))
+        .then(sixtyMax())
         .map(v => ({timezone: v.join(''), tz:'X'}));
     return tryAll([third, second, first]);
 }
