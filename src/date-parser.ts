@@ -14,6 +14,7 @@ import {
 import {month, monthParser} from "./month";
 import {year, yearParser} from "./year";
 import {separator} from './separator'
+import {amPmHours, amPmMarker, milliSeconds, minutes, seconds, twentyFourHours} from './time'
 
 
 /**
@@ -44,6 +45,12 @@ export function thenify(parsers: IParser<any>[]):SingleParser<DateResult>{
 
 const monthToken = genlex.tokenize(month(), "month", 1000);
 const yearToken = genlex.tokenize(year(), "year", 1000);
+const amPmHoursToken = genlex.tokenize(amPmHours(), "amPmHours", 1000);
+const amPmMarkerToken = genlex.tokenize(amPmMarker(), "amPmMarker", 1000);
+const twentyFourHoursToken = genlex.tokenize(twentyFourHours(), "twentyFourHours", 1000);
+const minutesToken = genlex.tokenize(minutes(), "minutes", 1000);
+const secondsToken = genlex.tokenize(seconds(), "seconds", 1000);
+const milliSecondsToken = genlex.tokenize(milliSeconds(), "milliSeconds", 1000);
 const separatorToken = genlex.tokenize(separator(), "sep", 10000); // a letter would
 // remove any possibility a separator is found
 genlex.setSeparatorsParser(F.any().filter(c => c === Symbol()))
@@ -55,11 +62,6 @@ const grammar = F.any().rep()
     .map((tuple:Tuple<TokenResult<Parser<any>>>) => thenify(tuple.array().map(t=>t.value)))
 
 
-export const parser = genlex.use(grammar);
+export const dateParser = genlex.use(grammar);
 
-
-export const dateParser = C.char('a')
-    .then(C.char('b'))
-    .then(C.char('c'))
-    .eos()
 
