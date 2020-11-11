@@ -3,16 +3,12 @@ import {Streams} from '@masala/parser'
 
 test('parsingGenlex', () => {
 
-
     const p = dateParser.val("MMYYYY");
     const val = p.val("122010");
-
-
     expect(val).toEqual({month: 12,year: 2010});
 });
 
 test('parsingGenlexWithSeparator', () => {
-
 
     const p = dateParser.val("MM-YYYY");
     const val = p.val("12-2010");
@@ -24,8 +20,6 @@ test('parsingGenlexWithSpaceSeparator', () => {
 
     const p = dateParser.val("MM YYYY");
     const val = p.val("12 2010");
-
-
     expect(val).toEqual({month: 12, year: 2010});
 });
 

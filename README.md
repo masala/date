@@ -5,6 +5,10 @@ Date parser using masala parser.
 ## Usage
 
 
+    const parser  = dateParser.val("YYYY-MM-ddThh:mm:ss::SSS a Z");
+    const response = parser.parse(Streams.ofString('2020-08-27T08:55:04::012 a.m. -06'));
+    // or 
+     value = parser.val('2020-08-27T08:55:04::012 a.m. -06');
 
 ## Goals
 
