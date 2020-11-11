@@ -23,8 +23,8 @@ It can be used by another masala parser or without it.
 ## Supported
 
 These tokens are supported with some limitations. The most important limitation is that i18n full
- days like Mon/Dimanche are not supported. For performance reasons, it's better that you choose
- how to handle it.
+ days like Mon/Dimanche/Dec/Noviembre are not supported. For performance reasons, it's better that
+  you choose how to handle it and modify the parser accordingly.
 
 It should be enough for most enterprise date parser though. Moreover you can add tokens,
  change the limitations, give new powers.
@@ -43,7 +43,9 @@ Example: `YYYY-MM-ddThh:mm:ss::SSS a Z` parses `2020-08-27T08:55:04::012 a.m. -0
         millis: 12,
         amPmMarker: 'AM',
         timezone: '-06',
-        tz: 'Z'
+        tz: 'Z',
+        tzHours: -6,
+        date: '2020-08-27T14:55:04.012Z'
 }
 ```
  
@@ -59,3 +61,7 @@ Example: `YYYY-MM-ddThh:mm:ss::SSS a Z` parses `2020-08-27T08:55:04::012 a.m. -0
 * AM-PM: `a` as `AM`, `am`, or `a.m.`; result {amPmMarker}
 * TimeZone :`Z` only but interpreted for `-08`, `-0800`, `+09:30`; result {timezone}
     - `{tz:'Z'}` is added to the result, as other timezone such as `z` or `X` could come.
+    -  {tzHours: -6, tzMinutes:30} are numeric values of the timezone
+* date: Date object compiled. This native object stores the timezone.
+    
+It's very basic. There is no control of number of days in a month or similar things. 

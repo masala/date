@@ -1,4 +1,4 @@
-import {C, F, IParser, N} from '@masala/parser'
+import {C, F, IParser, N, Tuple} from '@masala/parser'
 
 
 /**
@@ -35,16 +35,28 @@ const twelveMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<=12)
 const twentyFourMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<=24)
 const sixtyMax =()=>N.digit().occurrence(2).filter(f=>parseInt(f.join(''))<60)
 
+// concat2([+,0,6,3,0],1) -> 6
+// concat2([+,0,6,3,0],3) -> 30
+function concat2(tuple:Tuple<string>, index:number){
+    return parseInt(''+tuple.at(index)+tuple.at(index+1));
+}
+// same with sign
+function concat3(tuple:Tuple<string>, index:number){
+    return parseInt(''+tuple.at(index)+tuple.at(index+1)+tuple.at(index+2));
+}
+
 export function timeZoneZParser() {
     //-08; -0800; -08:00
 
-    const first = sign().then(twelveMax()).map(v => ({timezone: v.join(''), tz:'Z'}))
-    const second = sign().then(twelveMax()).then(sixtyMax()).map(v => ({timezone: v.join(''), tz:'Z'}))
+    const first = sign().then(twelveMax()).map(v => ({timezone: v.join(''), tz:'Z', tzHours:concat3(v,0)}))
+    const second = sign().then(twelveMax()).then(sixtyMax()).map(v => (
+        {timezone: v.join(''), tz:'Z', tzHours:concat3(v,0), tzMinutes:concat2(v,3)})
+    )
     const third = sign()
         .then(twelveMax())
         .then(C.char(":"))
         .then(sixtyMax())
-        .map(v => ({timezone: v.join(''), tz:'Z'}));
+        .map(v => ({timezone: v.join(''), tz:'Z', tzHours:concat3(v,0), tzMinutes:concat2(v,4)}));
     return tryAll([third, second, first]);
 }
 
