@@ -30,7 +30,7 @@ import {day} from './day'
  */
 const genlex = new GenLex();
 
-interface DateResult{
+export interface DateResult{
     date?:Date;
     year?:number;
     month?:number;

@@ -45,7 +45,6 @@ describe('dateParser Genlex', function () {
     test("full date ", () => {
         const parser = dateParser.val("YYYY-MM-ddThh:mm:ss::SSS a Z");
         const response = parser.parse(Streams.ofString('2020-08-27T08:55:04::012 a.m. -06'));
-        console.log(response);
         expect(response.isAccepted()).toBeTruthy();
     })
 

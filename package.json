@@ -2,7 +2,7 @@
   "name": "@masala/date",
   "description": "Masala date Parser",
   "license": "GPL 3.0",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "keywords": [
     "date",
     "masala",
@@ -34,15 +34,18 @@
       "url": "https://github.com/masala/date/blob/master/LICENSE"
     }
   ],
-  "main": "dist/date-parser.js",
+  "main": "dist/src/date-parser.js",
+  "files": ["dist/**/*", "masala-date.d.ts"],
   "types": "./masala-date.d.ts",
   "engines": {
     "node": ">= 6.11.4"
   },
   "scripts": {
+    "build": "tsc",
+    "prepare" : "npm run build",
     "test": "jest",
     "testone":"jest --testNamePattern=^combineTest$",
-    "specific": "ts-node ./examples/markdown/test/markdown-tests.ts"
+    "prepublishOnly" : "npm test"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.12.1",
