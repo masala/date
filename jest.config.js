@@ -1,5 +1,5 @@
 module.exports = {
-    modulePathIgnorePatterns: ["<rootDir>/dist/","<rootDir>/integration/"],
+    modulePathIgnorePatterns: ["<rootDir>/dist/"],
     "transform": {
         "^.+\\.(ts|tsx)$": "ts-jest"
     },
